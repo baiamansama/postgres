@@ -18,7 +18,7 @@ function Navbar() {
                             Sign in
                         </Link>
                     </div>
-                    <Link to='/trial' class="flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-3 md:text-base md:px-10">
+                    <Link to='/register' class="flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-3 md:text-base md:px-10">
                         Free trial
                     </Link>
                 </nav>
