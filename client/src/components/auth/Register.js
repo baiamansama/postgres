@@ -64,7 +64,6 @@ function Register({ setAlert, register }) {
                 </form>
                 <div className="mt-2"><h3>Already have an account? <Link to='/login'><span className="text-indigo-500">Login</span></Link></h3></div>
             </div>
-
         </div>
 
 )}
@@ -72,6 +71,6 @@ function Register({ setAlert, register }) {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired
-}
+};
 
 export default connect(null, { setAlert, register })(Register)
