@@ -4,12 +4,11 @@ const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const auth = require('../../middleware/auth')
-const User = require('../../models/User')
 const config = require('config')
 
 router.get('/', auth, async (req, res) => {
     try {
-      const user = await User.findById(req.user.id).select('-password');
+      const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [req.user_id])
       res.json(user);
     } catch (err) {
       console.error(err.message);
@@ -33,15 +32,15 @@ router.get('/', auth, async (req, res) => {
       const { email, password } = req.body;
   
       try {
-        let user = await User.findOne({ email });
+        let user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
   
-        if (!user) {
+        if (user.rows.length === 0) {
           return res
             .status(400)
             .json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
   
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.rows[0].user_password);
   
         if (!isMatch) {
           return res
@@ -51,7 +50,7 @@ router.get('/', auth, async (req, res) => {
   
         const payload = {
           user: {
-            id: user.id
+            id: user.rows[0].user_id
           }
         };
   
