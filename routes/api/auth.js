@@ -5,11 +5,12 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const auth = require('../../middleware/auth')
 const config = require('config')
+const pool = require('../../config/db')
 
 router.get('/', auth, async (req, res) => {
     try {
-      const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [req.user_id])
-      res.json(user);
+      const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [req.body.user_id])
+      res.json("I think it worked well");
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -33,7 +34,6 @@ router.get('/', auth, async (req, res) => {
   
       try {
         let user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
-  
         if (user.rows.length === 0) {
           return res
             .status(400)

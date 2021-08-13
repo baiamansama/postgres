@@ -27,9 +27,9 @@ router.post(
     const { name, email, password } = req.body;
 
     try {
-      const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
+      const user_test = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
 
-      if (user.rows.length > 0) {
+      if (user_test.rows.length > 0) {
         return res
           .status(400)
           .json({ errors: [{ msg: 'User already exists' }] });
