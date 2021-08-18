@@ -9,8 +9,8 @@ const pool = require('../../config/db')
 
 router.get('/', auth, async (req, res) => {
     try {
-      const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [req.body.user_id])
-      res.json("I think it worked well");
+      const user = await pool.query('SELECT * FROM users WHERE user_id = $1', [req.user.id])    
+      res.json(user)
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

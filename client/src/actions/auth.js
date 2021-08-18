@@ -7,9 +7,10 @@ import setAuthToken from '../utils/setAuthToken'
 export const loadUser = () => async dispatch =>{
     if(localStorage.token){
         setAuthToken(localStorage.token)
+        console.log('here0')
     }
     try {
-        const res = await axios.get('/auth')
+        const res = await axios.get('/api/auth')
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -20,8 +21,6 @@ export const loadUser = () => async dispatch =>{
         })
     }
 }
-
-
 
 
 //Register user
@@ -61,14 +60,14 @@ export const login = (email, password) => async dispatch =>{
         }
     }
     const body = JSON.stringify({ email, password })
-
     try {
         const res = await axios.post('/api/auth', body, config)
-
+        
         dispatch({
             type:LOGIN_SUCCESS,
             payload: res.data
         })
+        
         dispatch(loadUser())
     } catch (err) {
         const errors = err.response.data.errors
