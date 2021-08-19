@@ -11,6 +11,14 @@ router.get('/', auth, async (req, res) =>{
         res.status(500).json("server Error")
     }
 })
-
+router.get('/vocab', async (req, res) => {
+    try {
+        const vocablist = await pool.query("SELECT * FROM vocab")
+        res.json(vocablist.rows)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).send('servery error')
+    }
+})
 
 module.exports = router
