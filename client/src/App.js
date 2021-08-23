@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Alert from './components/layout/Alert'
 import Dashboard from './components/dashboard/Dashboard'
 import Payment from './components/Subscription/Payment'
+import Recover from './Recover/Recover'
+import PasswordReset from './PasswordReset/PasswordReset'
 import PrivateRoute from './components/routing/PrivateRoute'
 //redux
 import { Provider } from 'react-redux'
@@ -34,6 +36,8 @@ const App = () => {
             <Alert />
             <Switch>
               <Route exact path="/register" component={Register} />
+              <Route exact path="/recover" component={Recover} />
+              <Route exact path="/password-reset" component={PasswordReset} />
               <Route exact path="/payment" component={Payment} />
               <Route exact path="/test" component={Test} />
               <Route exact path="/subscribe" component={Subscribe} />

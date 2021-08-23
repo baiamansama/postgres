@@ -1,13 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 
-function Vocab({ vocablist, auth: {user}}) {
-    const [show, setShow] = useState(false)
-    const [five, setFive] = useState(0)
+export default function Vocablist({ vocablist }) {
     const isKnown = () => {
-        axios.post('http://localhost:5000/api/dashboard/vocab', {isKnown: true, vocab_id: vocablist[five].vocab_id})
+        axios.post('http://localhost:5000/api/dashboard/vocab/list', {isKnown: true, vocab_id: vocablist[five].vocab_id})
         setFive(five+1)
         }
     const unKnown = () => {
@@ -50,13 +46,3 @@ function Vocab({ vocablist, auth: {user}}) {
         
     )
 }
-
-Vocab.propTypes = {
-    auth: PropTypes.object.isRequired
-}
-
-const mapStateToProps =(state)=> ({
-    auth: state.auth
-})
-
-export default connect(mapStateToProps)(Vocab)

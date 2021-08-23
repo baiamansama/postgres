@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { setAlert } from './alert'
-import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from './types'
+import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, RESET_SUCCESS, RESET_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, RECOVER_SUCCESS, RECOVER_FAIL } from './types'
 import setAuthToken from '../utils/setAuthToken'
 //LOAD USER
 
@@ -77,6 +77,59 @@ export const login = (email, password) => async dispatch =>{
         }
         dispatch({
             type: LOGIN_FAIL
+        })
+    }
+}
+
+export const recover = (email) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ email })
+    try {
+        const res = await axios.post('/api/auth/recover', body, config)
+        dispatch({
+            type:RECOVER_SUCCESS,
+            payload: res.data
+        })
+        
+        dispatch(loadUser())
+    } catch (err) {
+        const errors = err.response.data.errors
+
+        if(errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+        dispatch({
+            type: RECOVER_FAIL
+        })
+    }
+}
+export const password_reset = (token, newPassword) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ newPassword })
+    try {
+        const res = await axios.post(`/api/auth/password-reset?token=${token}`, body, config)
+        dispatch({
+            type:RESET_SUCCESS,
+            payload: res.data
+        })
+        
+        dispatch(loadUser())
+    } catch (err) {
+        const errors = err.response.data.errors
+
+        if(errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+        dispatch({
+            type: RESET_FAIL
         })
     }
 }

@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
+const { createUserJwt, generatePasswordResetToken, generatedPasswordResetToken} = require('../../utils/tokens')
+const User= require('../../models/user')
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const auth = require('../../middleware/auth')
 const config = require('config')
 const pool = require('../../config/db')
+const { emailService } = require('../../services')
+
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -69,5 +73,37 @@ router.get('/', auth, async (req, res) => {
       }
     }
   );
+
+  router.post('/recover', auth, async ( req, res) =>{
+    try {
+      const { email } = req.body
+      const token = generatedPasswordResetToken()
+      const user = await User.savePasswordResetToken(email, token)
+      console.log(user)
+      
+      if(user){
+        await emailService.sendPasswordResetEmail(user, token)
+      }
+      return res.status(200).json({ message: 'if you have an account, so it is working'})
+    } catch (error) {
+      console.error(error.message)
+    }
+  })
+
+  router.post('/password-reset', auth, async ( req, res) =>{
+    try {
+      const { token } = req.query
+      const { newPassword } = req.body
+      console.log(newPassword)
+      const user = await User.resetPassword(token, newPassword)
+      
+      if(user){
+        await emailService.sendPasswordResetConfirmationEmail(user)
+      }
+      return res.status(200).json({ message: 'Password successfully reset'})
+    } catch (error) {
+      console.error(error.message)
+    }
+  })
   
   module.exports = router;

@@ -1,11 +1,14 @@
 import Vocab from './Vocab'
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
-function Dashboard() {
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+function Dashboard({ auth: { user }}) {
   const [vocablist, setVocablist] = useState('')
-  useEffect(async () =>{
+  useEffect(async() =>{
     await axios.get('http://localhost:5000/api/dashboard/vocab').then((res) => setVocablist(res.data))
   },[])
+  console.log(user)
   return (
     <div>
       {vocablist.length === 0 ? (<p>Pending</p>) : (
@@ -29,4 +32,12 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(Dashboard);
