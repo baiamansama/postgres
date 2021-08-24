@@ -8,7 +8,6 @@ function Dashboard({ auth: { user }}) {
   useEffect(async() =>{
     await axios.get('http://localhost:5000/api/dashboard/vocab').then((res) => setVocablist(res.data))
   },[])
-  console.log(user)
   return (
     <div>
       {vocablist.length === 0 ? (<p>Pending</p>) : (

@@ -74,13 +74,12 @@ router.get('/', auth, async (req, res) => {
     }
   );
 
-  router.post('/recover', auth, async ( req, res) =>{
+  router.post('/recover', async ( req, res) =>{
     try {
       const { email } = req.body
       const token = generatedPasswordResetToken()
       const user = await User.savePasswordResetToken(email, token)
       console.log(user)
-      
       if(user){
         await emailService.sendPasswordResetEmail(user, token)
       }
@@ -90,17 +89,24 @@ router.get('/', auth, async (req, res) => {
     }
   })
 
-  router.post('/password-reset', auth, async ( req, res) =>{
+  router.post('/password-reset', async ( req, res) =>{
     try {
       const { token } = req.query
-      const { newPassword } = req.body
-      console.log(newPassword)
-      const user = await User.resetPassword(token, newPassword)
-      
+      const { password } = req.body
+      const user = await User.resetPassword(token, password)
       if(user){
         await emailService.sendPasswordResetConfirmationEmail(user)
       }
       return res.status(200).json({ message: 'Password successfully reset'})
+    } catch (error) {
+      console.error(error.message)
+    }
+  })
+  router.delete('/', async ( req, res) =>{
+    try {
+      console.log(req.body)
+      await pool.query('DELETE FROM users WHERE user_email = $1;', [req.body.email]) 
+      res.json("user deleted")
     } catch (error) {
       console.error(error.message)
     }

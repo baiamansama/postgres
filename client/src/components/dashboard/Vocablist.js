@@ -10,7 +10,6 @@ export default function Vocablist({ vocablist }) {
         axios.post('http://localhost:5000/api/dashboard/vocab', {isKnown: false, vocab_id: vocablist[five].vocab_id})
         setFive(five+1)   
     }
-    console.log(vocablist)
     const handleClick = () => {
         setShow(true)
     }

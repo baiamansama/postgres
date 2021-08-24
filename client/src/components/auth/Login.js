@@ -41,7 +41,7 @@ function Login({ login, isAuthenticated }) {
                         <label htmlFor="password" className="block text-sm front-medium text-gray-700">Password</label>
                         <div className="mt-1">
                             <input id="password" name="password" type="password" value={password} onChange={e => handleChange(e)} required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
-                            <div><Link to="">forgot password?</Link></div>
+                            <div><Link to="/recover">forgot password?</Link></div>
                         </div>
                     </div>
                     <div>
@@ -52,7 +52,6 @@ function Login({ login, isAuthenticated }) {
                 </form>
                 <div className="mt-2"><h3>Don't have an account? <Link to='/register'><span className="text-indigo-500">Sign up</span></Link></h3></div>
             </div>
-
         </div>
 
 )}

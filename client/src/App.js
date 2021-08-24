@@ -16,6 +16,7 @@ import store from './store'
 import { loadUser } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 import Test from './components/Subscription/Test'
+import Settings from './components/Settings'
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
               <Route exact path="/payment" component={Payment} />
               <Route exact path="/test" component={Test} />
               <Route exact path="/subscribe" component={Subscribe} />
+              <Route exact path="/settings" component={Settings} />
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>

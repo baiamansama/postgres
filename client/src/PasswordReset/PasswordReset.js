@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import { password_reset } from '../actions/auth'
 
-function PasswordReset(password_reset) {
+function PasswordReset({password_reset}) {
     const [formData, setFormData] = useState({
         password: "",
         confirmPassword: ""
