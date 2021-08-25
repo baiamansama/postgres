@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setAlert } from './alert'
+import { Redirect } from 'react-router-dom'
 import { REGISTER_FAIL, DELETE_FAIL, DELETE_SUCCESS, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, RESET_SUCCESS, RESET_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, RECOVER_SUCCESS, RECOVER_FAIL } from './types'
 import setAuthToken from '../utils/setAuthToken'
 //LOAD USER
@@ -128,25 +129,21 @@ export const password_reset = (token, password) => async dispatch => {
         })
     }
 }
-export const deleteUser = (user_email) => async dispatch => {
+export const deleteUser = (delText) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-    const body = JSON.stringify({ user_email })
+    const body = JSON.stringify({ delText })
+    console.log(body)
     try {
         const res = await axios.delete('/api/auth', body, config)
         dispatch({
             type:DELETE_SUCCESS,
             payload:res.data
         })
-    } catch (err) {
-        const errors = err.response.data.errors
-
-        if(errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
-        }
+    } catch (err) { 
         dispatch({
             type: DELETE_FAIL
         })

@@ -104,8 +104,9 @@ router.get('/', auth, async (req, res) => {
   })
   router.delete('/', async ( req, res) =>{
     try {
-      console.log(req.body)
-      await pool.query('DELETE FROM users WHERE user_email = $1;', [req.body.email]) 
+      console.log('back')
+      await pool.query('DELETE FROM users WHERE user_email = $1;', [req.body.delText])
+      console.log('haha')
       res.json("user deleted")
     } catch (error) {
       console.error(error.message)
