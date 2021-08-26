@@ -64,6 +64,7 @@ router.get('/', auth, async (req, res) => {
           { expiresIn: '5 days' },
           (err, token) => {
             if (err) throw err;
+            console.log(token)
             res.json({ token });
           }
         );

@@ -1,16 +1,21 @@
-import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, RECOVER_FAIL, RECOVER_SUCCESS, RESET_FAIL, RESET_SUCCESS, DELETE_SUCCESS, DELETE_FAIL } from "../actions/types";
+import { REGISTER_FAIL,VOCABLIST_SUCCESS, VOCABLIST_FAIL ,REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, RECOVER_FAIL, RECOVER_SUCCESS, RESET_FAIL, RESET_SUCCESS, DELETE_SUCCESS, DELETE_FAIL } from "../actions/types";
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
-    user: null
+    user: null,
+    vocabulary: null
 }
 
 export default function(state = initialState, action){
     const { type, payload } = action
     
     switch (type){
+        case VOCABLIST_SUCCESS:
+            return {
+                ...state, vocablist: payload
+            }
         case USER_LOADED:
             return  {
                 ...state, isAuthenticated: true, loading: false, user: payload

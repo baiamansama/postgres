@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import Payment from './components/Subscription/Payment'
 import Recover from './Recover/Recover'
 import PasswordReset from './PasswordReset/PasswordReset'
+import Vocablist from './components/dashboard/Vocablist'
 import PrivateRoute from './components/routing/PrivateRoute'
 //redux
 import { Provider } from 'react-redux'
@@ -44,6 +45,7 @@ const App = () => {
               <Route exact path="/subscribe" component={Subscribe} />
               <Route exact path="/settings" component={Settings} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/vocablist" component={Vocablist} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </section>

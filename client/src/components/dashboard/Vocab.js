@@ -1,17 +1,25 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { vocab } from '../../actions/vocab'
 import PropTypes from 'prop-types'
+import { Link, Redirect } from 'react-router-dom'
 
-function Vocab({ vocablist, auth: {user}}) {
+function Vocab({ vocablist, vocab, auth: {user}}) {
     const [show, setShow] = useState(false)
     const [five, setFive] = useState(0)
-    const isKnown = () => {
-        axios.post('http://localhost:5000/api/dashboard/vocab', {isKnown: true, vocab_id: vocablist[five].vocab_id})
+    const isKnown = (e) => {
+        e.preventDefault()
+        let example1 = {isKnown: true, vocab_id: vocablist[five].vocab_id}
+        const {isKnown, vocab_id} = example1
+        vocab(isKnown, vocab_id)
         setFive(five+1)
         }
-    const unKnown = () => {
-        axios.post('http://localhost:5000/api/dashboard/vocab', {isKnown: false, vocab_id: vocablist[five].vocab_id})
+    const unKnown = (e) => {
+        e.preventDefault()
+        let example = {isKnown: false, vocab_id: vocablist[five].vocab_id}
+        const {isKnown, vocab_id} = example
+        vocab(isKnown, vocab_id)
         setFive(five+1)   
     }
     console.log(vocablist)
@@ -42,7 +50,7 @@ function Vocab({ vocablist, auth: {user}}) {
          view my 5 words of a the day
         </button>
         <div className="p-2 bg-green-300 rounded-xl mt-3 text-center">
-            <a href="#">go to vocablist</a>
+            <Link to='/vocablist'>go to vocablist</Link>
         </div>
         </div>
         )}
@@ -52,6 +60,7 @@ function Vocab({ vocablist, auth: {user}}) {
 }
 
 Vocab.propTypes = {
+    vocab: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 }
 
@@ -59,4 +68,5 @@ const mapStateToProps =(state)=> ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(Vocab)
+
+export default connect(mapStateToProps, {vocab})(Vocab)
