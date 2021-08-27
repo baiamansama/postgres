@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { vocablist } from '../../actions/auth'
 import PropTypes from 'prop-types'
-import { Link, Redirect } from 'react-router-dom'
-import { vocab } from '../../actions/vocab'
 
 function Vocablist({ vocablist, list, auth: {user}}) {
     vocablist()
     console.log()
+
+    //Comment section
+    //here I was trying add "NEW" button to add new words. And also, search button to search words. All this logic would be done on postgresql:)
     return (
         <div> 
             <div class="w-full flex flex-wrap">
