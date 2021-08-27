@@ -27,17 +27,3 @@ export const vocab = (isKnown, vocab_id) => async dispatch =>{
         })
     }
 }
-export const vocablist = () => async dispatch =>{
-    try {
-        const res = await axios.get('/api/dashboard/vocablist')
-        dispatch({
-            type:VOCABLIST_SUCCESS,
-            payload: res.data
-        })
-    } catch (err) {
-        console.error(err.message)
-        }
-        dispatch({
-            type: VOCABLIST_FAIL
-        })
-    }

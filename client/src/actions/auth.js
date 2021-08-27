@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { setAlert } from './alert'
 import { Redirect } from 'react-router-dom'
-import { REGISTER_FAIL, DELETE_FAIL, DELETE_SUCCESS, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, RESET_SUCCESS, RESET_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, RECOVER_SUCCESS, RECOVER_FAIL } from './types'
+import { REGISTER_FAIL, DELETE_FAIL, DELETE_SUCCESS, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, RESET_SUCCESS, RESET_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, RECOVER_SUCCESS, RECOVER_FAIL, VOCABLIST_SUCCESS, VOCABLIST_FAIL } from './types'
 import setAuthToken from '../utils/setAuthToken'
 //LOAD USER
 
@@ -21,6 +21,20 @@ export const loadUser = () => async dispatch =>{
         })
     }
 }
+export const vocablist = () => async dispatch =>{
+    try {
+        const res = await axios.get('/api/dashboard/vocablist')
+        dispatch({
+            type:VOCABLIST_SUCCESS,
+            payload: res.data
+        })
+    } catch (err) {
+        console.error(err.message)
+        }
+        dispatch({
+            type: VOCABLIST_FAIL
+        })
+    }
 
 
 //Register user
@@ -41,6 +55,7 @@ export const register = ({ name, email, password }) => async dispatch =>{
             payload: res.data
         })
         dispatch(loadUser())
+        dispatch(vocablist())
     } catch (err) {
         const errors = err.response.data.errors
 
@@ -69,6 +84,7 @@ export const login = (email, password) => async dispatch =>{
         })
         
         dispatch(loadUser())
+        dispatch(vocablist())
     } catch (err) {
         const errors = err.response.data.errors
 
