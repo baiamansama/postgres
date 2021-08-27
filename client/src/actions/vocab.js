@@ -34,7 +34,6 @@ export const vocablist = () => async dispatch =>{
             type:VOCABLIST_SUCCESS,
             payload: res.data
         })
-        dispatch(loadUser())
     } catch (err) {
         console.error(err.message)
         }

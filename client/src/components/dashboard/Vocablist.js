@@ -4,15 +4,16 @@ import { vocablist } from '../../actions/vocab'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 
-function Vocablist({ vocablist, list: {vocabulary}, auth: {user}}) {
+function Vocablist({ vocablist, list, auth: {user}}) {
     vocablist()
-    console.log(vocabulary)
+    console.log(list)
     return (
         <div>
-            {vocabulary}
+            <p>hidhf</p>
         </div>
     )
-    }
+}
+
 Vocablist.propTypes = {
     vocablist: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
@@ -20,7 +21,7 @@ Vocablist.propTypes = {
 
 const mapStateToProps =(state)=> ({
     auth: state.auth,
-    list: state.auth
+    list: state.vocab.listOfVocab
 })
 
 export default connect(mapStateToProps, {vocablist})(Vocablist)

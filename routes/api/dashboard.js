@@ -36,12 +36,10 @@ router.post('/vocab', auth, async (req, res) => {
 
 router.get('/vocablist', auth, async (req, res) => {
     try {
-    vote_owner uuid REFERENCES users(user_id),
-        const listy = pool.query('SELECT english, korean, sentence, isKnown FROM vocab_vote INNER JOIN vocab ON vocab_vote.vote_word = vocab.vocab_id WHERE vote_owner = $1;', [req.user.id])
-        res.json(listy)
-        console.log()
+        const listy = await pool.query('SELECT english, korean, sentence, isKnown FROM vocab_vote INNER JOIN vocab ON vocab_vote.vote_word = vocab.vocab_id WHERE vote_owner = $1', [req.user.id])
+        res.json(listy.rows)
     } catch (err) {
-        
+        console.error(err.message)
     }
 })
 
