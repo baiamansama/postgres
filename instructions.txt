@@ -1,0 +1,11 @@
+I was plannig to do:
+    * add new word on vocablist feature
+    * search on vocablist feature(this and above can be done via postgres and useState commands, I guess)
+    * I have already implemented file upload to aws s3 bucket and fetch file to show on frontend. You can find 
+    it here --> https://github.com/baiamansama/streamy.git . You can further develop it or code new one.
+    * I was trying to use old Redux method - actions/reducers. However, I would recommend you to use react redux toolkit
+    to make easy your coding experience
+    * If you are familiar with MySql, then you can easily learn postgresSql. I will definetely recommend postgresSql
+    * I have not tested entire project, but recommend you to use jest to do unit testing:)
+
+    <h1>Good Luck</h1>
